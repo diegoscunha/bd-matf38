@@ -9,7 +9,7 @@ GRANT ALL PRIVILEGES ON *.* TO `user_dba`@'localhost';
 USUÁRIO DA APLICAÇÃO WEB
 */
 CREATE USER `app_web`@`localhost` IDENTIFIED BY 'ecd123';
-GRANT SELECT,INSERT, DELETE, UPDATE ON `geracao_distribuida`.* TO `app_web`@'localhost';
+GRANT SELECT, INSERT, DELETE, UPDATE, EXECUTE ON `geracao_distribuida`.* TO `app_web`@'localhost';
 
 /*
 USUÁRIO ANALISTA DE DADOS, SOMENTE COM PREMISSÃO PARA CONSULTA
