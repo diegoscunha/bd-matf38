@@ -34,7 +34,7 @@ CREATE TABLE `cad_detalhe_pessoa_fisica` (
   UNIQUE KEY `uq_nn_cpf` (`nn_cpf`),
   KEY `fk_cad_detalhe_pessoa_fisica_cad_consumidor_idx` (`id_cad_produtor`),
   CONSTRAINT `fk_cad_detalhe_pessoa_fisica_cad_consumidor` FOREIGN KEY (`id_cad_produtor`) REFERENCES `cad_produtor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `cad_detalhe_pessoa_fisica` (
 
 LOCK TABLES `cad_detalhe_pessoa_fisica` WRITE;
 /*!40000 ALTER TABLE `cad_detalhe_pessoa_fisica` DISABLE KEYS */;
-INSERT INTO `cad_detalhe_pessoa_fisica` VALUES (1,1,'M','12345678900','1986-01-01');
+INSERT INTO `cad_detalhe_pessoa_fisica` VALUES (1,1,'M','07914090077','1986-01-01'),(2,3,'M','02124598562','1986-12-29'),(6,10,'M','16448967028','1986-12-29'),(8,17,'M','71521374040','1986-12-29');
 /*!40000 ALTER TABLE `cad_detalhe_pessoa_fisica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +63,7 @@ CREATE TABLE `cad_detalhe_pessoa_juridica` (
   UNIQUE KEY `uq_nn_cnpj` (`nn_cnpj`),
   KEY `fk_cad_detalhe_pessoa_juridica_cad_consumidor_idx` (`id_cad_produtor`),
   CONSTRAINT `fk_cad_detalhe_pessoa_juridica_cad_consumidor` FOREIGN KEY (`id_cad_produtor`) REFERENCES `cad_produtor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `cad_detalhe_pessoa_juridica` (
 
 LOCK TABLES `cad_detalhe_pessoa_juridica` WRITE;
 /*!40000 ALTER TABLE `cad_detalhe_pessoa_juridica` DISABLE KEYS */;
-INSERT INTO `cad_detalhe_pessoa_juridica` VALUES (1,2,'01234874000199','Empresa Tudo Lindo S.A.');
+INSERT INTO `cad_detalhe_pessoa_juridica` VALUES (1,2,'36968769000145','Empresa Tudo Lindo S.A.'),(2,4,'57204898000137','Razão Social'),(4,12,'64236433000123','Razão Social'),(7,15,'48529517000107','Razão Social');
 /*!40000 ALTER TABLE `cad_detalhe_pessoa_juridica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,12 +168,12 @@ CREATE TABLE `cad_produtor` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `cad_tipo_produtor` enum('PF','PJ') NOT NULL,
   `dt_cadastro` datetime NOT NULL,
-  `nm_produtor` varchar(45) NOT NULL,
+  `nm_produtor` varchar(100) NOT NULL,
   `ds_email` varchar(100) NOT NULL,
   `ds_telefone` char(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ds_email_UNIQUE` (`ds_email`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +182,7 @@ CREATE TABLE `cad_produtor` (
 
 LOCK TABLES `cad_produtor` WRITE;
 /*!40000 ALTER TABLE `cad_produtor` DISABLE KEYS */;
-INSERT INTO `cad_produtor` VALUES (1,'PF','2021-11-25 00:00:00','Hugo Borges','hemborges@hotmail.com','71999999999'),(2,'PJ','2021-11-11 00:00:00','Empresa Fantasma da Bahia','empresa.fantasma@empresafantasma.com.br','71988888888');
+INSERT INTO `cad_produtor` VALUES (1,'PF','2021-11-25 00:00:00','Hugo Borges','hemborges@hotmail.com','71999999999'),(2,'PJ','2021-11-11 00:00:00','Empresa Fantasma da Bahia','empresa.fantasma@empresafantasma.com.br','71988888888'),(3,'PF','2021-12-05 20:11:44','diego cunha','diego@gmail.com','71981114626'),(4,'PJ','2021-12-05 20:13:17','Nome fantasia','email@gmail.com','71981114626'),(10,'PF','2021-12-05 20:39:31','diego cunha','diego1@gmail.com','71981114626'),(12,'PJ','2021-12-05 20:41:23','Nome fantasia','email1@gmail.com','71981114626'),(15,'PJ','2021-12-05 21:26:11','Nome fantasia','email2@gmail.com','71981114626'),(17,'PF','2021-12-05 21:31:06','diego cunha','diego2@gmail.com','71981114626');
 /*!40000 ALTER TABLE `cad_produtor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -195,7 +195,7 @@ DROP TABLE IF EXISTS `cad_tipo_unid_geracao`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cad_tipo_unid_geracao` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `nm_sigla` varchar(3) NOT NULL,
+  `nm_sigla` char(3) NOT NULL,
   `nm_tipo_unid_geracao` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nm_sigla_UNIQUE` (`nm_sigla`)
@@ -225,7 +225,7 @@ CREATE TABLE `cad_unid_geracao_distribuida` (
   `id_cad_distribuidora` bigint(20) NOT NULL,
   `id_cad_tipo_unid_geracao` bigint(20) NOT NULL,
   `id_cad_grupo_fornecimento` bigint(20) NOT NULL,
-  `id_log_endereco` bigint(20) NOT NULL,
+  `id_endereco` bigint(20) NOT NULL,
   `dt_instalacao` datetime NOT NULL,
   `nn_potencia_instalada` float NOT NULL,
   PRIMARY KEY (`id`),
@@ -233,13 +233,13 @@ CREATE TABLE `cad_unid_geracao_distribuida` (
   KEY `fk_cad_unid_geracao_distribuida_cad_distribuidora_idx` (`id_cad_distribuidora`),
   KEY `fk_cad_unid_geracao_distribuida_cad_tipo_unid_geracao_idx` (`id_cad_tipo_unid_geracao`),
   KEY `fk_cad_unid_geracao_distribuida_cad_grupo_fornecimento_idx` (`id_cad_grupo_fornecimento`),
-  KEY `fk_cad_unid_geracao_distribuida_endereco_idx` (`id_log_endereco`),
+  KEY `fk_cad_unid_geracao_distribuida_endereco_idx` (`id_endereco`),
   CONSTRAINT `fk_cad_unid_geracao_distribuida_cad_consumidor` FOREIGN KEY (`id_cad_produtor`) REFERENCES `cad_produtor` (`id`),
   CONSTRAINT `fk_cad_unid_geracao_distribuida_cad_distribuidora` FOREIGN KEY (`id_cad_distribuidora`) REFERENCES `cad_distribuidora` (`id`),
   CONSTRAINT `fk_cad_unid_geracao_distribuida_cad_grupo_fornecimento` FOREIGN KEY (`id_cad_grupo_fornecimento`) REFERENCES `cad_grupo_fornecimento` (`id`),
   CONSTRAINT `fk_cad_unid_geracao_distribuida_cad_tipo_unid_geracao` FOREIGN KEY (`id_cad_tipo_unid_geracao`) REFERENCES `cad_tipo_unid_geracao` (`id`),
-  CONSTRAINT `fk_cad_unid_geracao_distribuida_endereco` FOREIGN KEY (`id_log_endereco`) REFERENCES `endereco` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_cad_unid_geracao_distribuida_endereco` FOREIGN KEY (`id_endereco`) REFERENCES `endereco` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,9 +248,63 @@ CREATE TABLE `cad_unid_geracao_distribuida` (
 
 LOCK TABLES `cad_unid_geracao_distribuida` WRITE;
 /*!40000 ALTER TABLE `cad_unid_geracao_distribuida` DISABLE KEYS */;
-INSERT INTO `cad_unid_geracao_distribuida` VALUES (1,1,1,1,1,1,'2021-11-11 00:00:00',4000),(2,2,2,1,1,1,'2021-09-30 00:00:00',6000);
+INSERT INTO `cad_unid_geracao_distribuida` VALUES (1,1,1,1,1,1,'2021-11-11 00:00:00',4000),(2,2,2,1,1,1,'2021-09-30 00:00:00',6000),(3,3,1,4,1,1,'2021-11-11 00:00:00',8000);
 /*!40000 ALTER TABLE `cad_unid_geracao_distribuida` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `geracao_distribuida`.`cad_unid_geracao_distribuida_AFTER_INSERT` AFTER INSERT ON `cad_unid_geracao_distribuida` FOR EACH ROW
+BEGIN
+    DECLARE nm_sigla_new CHAR(3);
+    
+	SET nm_sigla_new = (SELECT `nm_sigla` FROM `cad_tipo_unid_geracao` WHERE `id`= NEW.`id_cad_tipo_unid_geracao`);
+        
+	INSERT INTO `hist_unid_geracao_distribuida`
+	(`id_cad_unid_geracao_distribuida`,`old_tipo_unid_geracao`,`new_tipo_unid_geracao`,`ds_historico`) 
+	VALUES
+	(NEW.`id`,NULL,NEW.`id_cad_tipo_unid_geracao`,CONCAT('TIPO CRIADO COM [',nm_sigla_new,'].'));
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `geracao_distribuida`.`cad_unid_geracao_distribuida_AFTER_UPDATE` AFTER UPDATE ON `cad_unid_geracao_distribuida` FOR EACH ROW
+BEGIN
+	DECLARE nm_sigla_old CHAR(3);
+    DECLARE nm_sigla_new CHAR(3);
+
+	IF NEW.`id_cad_tipo_unid_geracao` != OLD.`id_cad_tipo_unid_geracao` THEN
+		SET nm_sigla_old = (SELECT `nm_sigla` FROM `cad_tipo_unid_geracao` WHERE `id`= OLD.`id_cad_tipo_unid_geracao`);
+		SET nm_sigla_new = (SELECT `nm_sigla` FROM `cad_tipo_unid_geracao` WHERE `id`= NEW.`id_cad_tipo_unid_geracao`);
+        
+		INSERT INTO `hist_unid_geracao_distribuida`
+        (`id_cad_unid_geracao_distribuida`,`old_tipo_unid_geracao`,`new_tipo_unid_geracao`,`ds_historico`) 
+        VALUES
+        (NEW.`id`, OLD.`id_cad_tipo_unid_geracao`,NEW.`id_cad_tipo_unid_geracao`,CONCAT('TIPO ALTERADO DE [',nm_sigla_old, '] PARA [',nm_sigla_new,'].'));
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `endereco`
@@ -309,6 +363,39 @@ LOCK TABLES `estado` WRITE;
 /*!40000 ALTER TABLE `estado` DISABLE KEYS */;
 INSERT INTO `estado` VALUES (11,'Rondônia','RO'),(12,'Acre','AC'),(13,'Amazonas','AM'),(14,'Roraima','RR'),(15,'Pará','PA'),(16,'Amapá','AP'),(17,'Tocantins','TO'),(21,'Maranhão','MA'),(22,'Piauí','PI'),(23,'Ceará','CE'),(24,'Rio Grande do Norte','RN'),(25,'Paraíba','PB'),(26,'Pernambuco','PE'),(27,'Alagoas','AL'),(28,'Sergipe','SE'),(29,'Bahia','BA'),(31,'Minas Gerais','MG'),(32,'Espírito Santo','ES'),(33,'Rio de Janeiro','RJ'),(35,'São Paulo','SP'),(41,'Paraná','PR'),(42,'Santa Catarina','SC'),(43,'Rio Grande do Sul','RS'),(50,'Mato Grosso do Sul','MS'),(51,'Mato Grosso','MT'),(52,'Goiá¡s','GO'),(53,'Distrito Federal','DF');
 /*!40000 ALTER TABLE `estado` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hist_unid_geracao_distribuida`
+--
+
+DROP TABLE IF EXISTS `hist_unid_geracao_distribuida`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hist_unid_geracao_distribuida` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id_cad_unid_geracao_distribuida` bigint(20) NOT NULL,
+  `old_tipo_unid_geracao` bigint(20) DEFAULT NULL,
+  `new_tipo_unid_geracao` bigint(20) NOT NULL,
+  `ds_historico` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_hist_unid_geracao_distribuida_cad_tipo_unid_geracao_idx` (`old_tipo_unid_geracao`),
+  KEY `fk_hist_unid_geracao_distribuida_cad_tipo_unid_geracao_new_idx` (`new_tipo_unid_geracao`),
+  KEY `fk_hist_unid_geracao_distribuida_cad_unid_geracao_distribui_idx` (`id_cad_unid_geracao_distribuida`),
+  CONSTRAINT `fk_hist_unid_geracao_distribuida_cad_tipo_unid_geracao_new` FOREIGN KEY (`new_tipo_unid_geracao`) REFERENCES `cad_tipo_unid_geracao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_hist_unid_geracao_distribuida_cad_tipo_unid_geracao_old` FOREIGN KEY (`old_tipo_unid_geracao`) REFERENCES `cad_tipo_unid_geracao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_hist_unid_geracao_distribuida_cad_unid_geracao_distribuida` FOREIGN KEY (`id_cad_unid_geracao_distribuida`) REFERENCES `cad_unid_geracao_distribuida` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hist_unid_geracao_distribuida`
+--
+
+LOCK TABLES `hist_unid_geracao_distribuida` WRITE;
+/*!40000 ALTER TABLE `hist_unid_geracao_distribuida` DISABLE KEYS */;
+INSERT INTO `hist_unid_geracao_distribuida` VALUES (1,1,NULL,1,'TIPO CRIADO COM [UHE].'),(2,2,NULL,1,'TIPO CRIADO COM [UHE].'),(3,3,NULL,3,'TIPO CRIADO COM [PCH].'),(4,3,3,4,'TIPO ALTERADO DE [PCH] PARA [EOL].');
+/*!40000 ALTER TABLE `hist_unid_geracao_distribuida` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -371,6 +458,308 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'geracao_distribuida'
 --
+/*!50003 DROP FUNCTION IF EXISTS `validar_cnpj` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `validar_cnpj`(CNPJ CHAR(14)) RETURNS smallint(1)
+BEGIN
+	DECLARE INDICE INT;
+    DECLARE SOMA INT;
+    DECLARE DIGITO_1 INT;
+    DECLARE DIGITO_2 INT;
+    DECLARE VAR1 INT;
+    DECLARE VAR2 INT;
+    DECLARE DIGITO_1_CNPJ CHAR(1);
+    DECLARE DIGITO_2_CNPJ CHAR(1);
+    DECLARE NR_DOCUMENTO_AUX VARCHAR(14);
+    SET SOMA = 0;
+    SET INDICE = 1;
+    SET VAR1 = 5;
+	/* Verificando se o formato é valido */
+	SET NR_DOCUMENTO_AUX = LTRIM(RTRIM(CNPJ));
+    IF (NR_DOCUMENTO_AUX IN ('00000000000000', '11111111111111', '22222222222222', '33333333333333', '44444444444444', '55555555555555', '66666666666666', '77777777777777', '88888888888888', '99999999999999')) THEN
+		RETURN 0;
+    END IF;
+    
+    IF (LENGTH(NR_DOCUMENTO_AUX) <> 14) THEN
+		RETURN 0;
+    END IF;
+	/* Iniciando a validacao */
+	SET DIGITO_1_CNPJ = SUBSTRING(CNPJ, LENGTH(CNPJ)- 1, 1);
+    SET DIGITO_2_CNPJ = SUBSTRING(CNPJ, LENGTH(CNPJ), 1);
+ 
+	WHILE (INDICE <= 4 ) DO
+		SET SOMA = SOMA + CAST(SUBSTRING(CNPJ, INDICE, 1) AS UNSIGNED) * VAR1;
+        SET INDICE = INDICE + 1;
+        SET VAR1 = VAR1 - 1;
+	END WHILE;
+ 
+       
+    SET VAR2 = 9;
+    WHILE (INDICE <= 12 ) DO
+        SET SOMA = SOMA + CAST(SUBSTRING(CNPJ, INDICE, 1) AS UNSIGNED) * VAR2;
+        SET INDICE = INDICE + 1;
+        SET VAR2 = VAR2 - 1;
+    END WHILE;
+ 
+    SET DIGITO_1 = (SOMA % 11 );
+ 
+	/* Primeiro Digito Verificador */
+    IF DIGITO_1 < 2 THEN
+        SET DIGITO_1 = 0;
+    ELSE
+        SET DIGITO_1 = 11 - (SOMA % 11);
+	END IF;
+
+    SET INDICE = 1;
+    SET SOMA = 0;
+    SET VAR1 = 6;
+    
+ 
+    WHILE (INDICE <= 5 ) DO
+        SET SOMA = SOMA + CAST(SUBSTRING(CNPJ, INDICE, 1) AS UNSIGNED) * VAR1;
+        SET INDICE = INDICE + 1;
+        SET VAR1 = VAR1 - 1;
+    END WHILE;
+ 
+    SET VAR2 = 9;
+    WHILE (INDICE <= 13 ) DO
+        SET SOMA = SOMA + CAST(SUBSTRING(CNPJ, INDICE, 1) AS UNSIGNED) * VAR2;
+        SET INDICE = INDICE + 1;
+        SET VAR2 = VAR2 - 1;       
+    END WHILE;
+    
+    SET DIGITO_2 = (SOMA % 11);
+	/* Segundo Digito Verificador */
+    IF DIGITO_2 < 2 THEN
+        SET DIGITO_2 = 0;
+    ELSE
+        SET DIGITO_2 = 11 - (SOMA % 11 );
+	END IF;
+    
+	/* Validando os digitos verificadores calculados com os digitos verificadores do CNPJ informado */
+    IF (DIGITO_1 = DIGITO_1_CNPJ) AND (DIGITO_2 = DIGITO_2_CNPJ) THEN
+        RETURN 1;
+    ELSE
+        RETURN 0;
+	END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `validar_cpf` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `validar_cpf`(CPF CHAR(11)) RETURNS smallint(1)
+BEGIN
+	DECLARE SOMA INT;
+    DECLARE INDICE INT;
+    DECLARE DIGITO_1 INT;
+    DECLARE DIGITO_2 INT;
+    DECLARE NR_DOCUMENTO_AUX VARCHAR(11);
+   
+	DECLARE DIGITO_1_CPF CHAR(2);
+    DECLARE DIGITO_2_CPF CHAR(2);
+    /*
+    Remove os CPFs onde todos os números são iguais
+    */
+    SET NR_DOCUMENTO_AUX = LTRIM(RTRIM(CPF));
+    IF (NR_DOCUMENTO_AUX IN ('00000000000', '11111111111', '22222222222', '33333333333', '44444444444', '55555555555', '66666666666', '77777777777', '88888888888', '99999999999', '12345678909')) THEN
+		RETURN 0;
+    END IF;
+	/*
+	O CPF deve ter 11 caracteres 
+	*/
+    IF (LENGTH(NR_DOCUMENTO_AUX) <> 11) THEN
+		RETURN 0;
+    ELSE 
+		/* 
+		Armazendo os digitos verificadores do CPF informado 
+		*/
+		SET DIGITO_1_CPF = SUBSTRING(NR_DOCUMENTO_AUX,LENGTH(NR_DOCUMENTO_AUX)-1,1);
+		SET DIGITO_2_CPF = SUBSTRING(NR_DOCUMENTO_AUX,LENGTH(NR_DOCUMENTO_AUX),1);
+		/*Cálculo do primeiro dígito verificador*/
+		SET SOMA = 0;
+		SET INDICE = 1;
+		WHILE (INDICE <= 9) DO          
+			SET Soma = Soma + CAST(SUBSTRING(NR_DOCUMENTO_AUX,INDICE,1) AS UNSIGNED) * (11 - INDICE);             
+			SET INDICE = INDICE + 1;      
+		END WHILE;      
+		
+		SET DIGITO_1 = 11 - (SOMA % 11);      
+		
+		IF (DIGITO_1 > 9) THEN
+			SET DIGITO_1 = 0;
+		END IF;
+		
+		/* Cálculo do segundo dígito verificador */
+		SET SOMA = 0;
+		SET INDICE = 1;
+		
+		WHILE (INDICE <= 10) DO
+			SET Soma = Soma + CAST(SUBSTRING(NR_DOCUMENTO_AUX,INDICE,1) AS UNSIGNED) * (12 - INDICE);              
+			SET INDICE = INDICE + 1;
+		END WHILE;
+		
+		SET DIGITO_2 = 11 - (SOMA % 11);
+		
+		IF DIGITO_2 > 9 THEN
+			SET DIGITO_2 = 0;
+		END IF;
+		
+		/* Validando os digitos verificadores calculados com os digitos verificadores do CPF informado */
+		IF (DIGITO_1 = DIGITO_1_CPF) AND (DIGITO_2 = DIGITO_2_CPF) THEN
+			RETURN 1;
+		ELSE
+			RETURN 0;
+		END IF;
+	END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `cadastrar_produtor` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cadastrar_produtor`(IN cpf_cnpj VARCHAR(14), IN nm_produtor VARCHAR(100), IN ds_email VARCHAR(100), IN ds_telefone VARCHAR(11), IN pf_sexo CHAR(1), IN pf_dt_nascimento DATE, IN pj_nm_razao_social VARCHAR(100))
+BEGIN
+	DECLARE ID_PRODUTOR BIGINT(20);
+    DECLARE ERRO BOOLEAN;
+	DECLARE MSG_ERROR VARCHAR(100);
+    DECLARE MSG_SUCESSO VARCHAR(100);
+    DECLARE MSG VARCHAR(100);
+    DECLARE MSG_ERRO_BD VARCHAR(100);
+    
+    DECLARE CPF_CNPJ_INVALIDO VARCHAR(45);
+    DECLARE CPF_CADASTRADO VARCHAR(45);
+    DECLARE CNPJ_CADASTRADO VARCHAR(45); 
+    
+    DECLARE ERRO_BD SMALLINT DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET ERRO_BD = 1;
+    
+    SET MSG_SUCESSO = 'CADASTRO REALIZADO COM SUCESSO!';
+    SET MSG_ERRO_BD = 'ERRO DE BANCO DE DADOS!';
+    SET MSG_ERROR = 'CPF OU CNPJ INVÁLIDO!';
+    SET CPF_CNPJ_INVALIDO = 'CPF OU CNPJ INVÁLIDO!';
+    SET CPF_CADASTRADO = 'CPF JÁ CADASTRADO!';
+    SET CNPJ_CADASTRADO = 'CNPJ JÁ CADASTRADO!';
+    
+    START TRANSACTION;
+    
+    /* VERIFICAR SE SÓ POSSUI NÚMEROS */
+	IF cpf_cnpj REGEXP ('^[0-9]+$') THEN
+		/* VALIDAR TAMANHO */
+		IF CHAR_LENGTH(cpf_cnpj) = 11 THEN
+			/* VALIDAR CPF */
+            IF validar_cpf(cpf_cnpj) THEN
+                SET ID_PRODUTOR = (SELECT `pf`.`id` FROM `cad_produtor` `p`
+								   INNER JOIN `cad_detalhe_pessoa_fisica` `pf` ON `p`.`id` = `pf`.`id_cad_produtor`
+								   WHERE `pf`.`nn_cpf` = cpf_cnpj);
+                
+                IF ID_PRODUTOR THEN
+					SET ERRO = TRUE;
+					SET MSG = CPF_CADASTRADO;
+				ELSE
+                    INSERT INTO `cad_produtor` (`cad_tipo_produtor`,`dt_cadastro`,`nm_produtor`,`ds_email`,`ds_telefone`) 
+                    VALUES ('PF',NOW(),nm_produtor,ds_email,ds_telefone);
+                    
+                    SET ID_PRODUTOR = LAST_INSERT_ID();
+                    
+                    INSERT INTO `cad_detalhe_pessoa_fisica` (`id_cad_produtor`,`sexo`,`nn_cpf`,`dt_nascimento`)
+                    VALUES (ID_PRODUTOR,pf_sexo,cpf_cnpj,pf_dt_nascimento);
+                    
+                    IF ERRO_BD = 1 THEN
+						ROLLBACK;
+                        SET ERRO = TRUE;
+						SET MSG = MSG_ERRO_BD;
+					ELSE
+						COMMIT;
+                        SET ERRO = FALSE;
+						SET MSG = MSG_SUCESSO;
+                    END IF;
+                END IF;
+            ELSE
+				SET ERRO = TRUE;
+				SET MSG = 'CPF INVÁLIDO!';
+            END IF;
+		ELSEIF CHAR_LENGTH(cpf_cnpj) = 14 THEN
+			/* VALIDAR CNPJ */
+			IF validar_cnpj(cpf_cnpj) THEN
+				SET ID_PRODUTOR = (SELECT `pj`.`id` FROM `cad_produtor` `p`
+								   INNER JOIN `cad_detalhe_pessoa_juridica` `pj` ON `p`.`id` = `pj`.`id_cad_produtor`
+								   WHERE `pj`.`nn_cnpj` = cpf_cnpj);
+				
+				IF ID_PRODUTOR THEN
+					SET ERRO = TRUE;
+					SET MSG = CNPJ_CADASTRADO;
+				ELSE
+                    INSERT INTO `cad_produtor` (`cad_tipo_produtor`,`dt_cadastro`,`nm_produtor`,`ds_email`,`ds_telefone`) 
+                    VALUES ('PJ',NOW(),nm_produtor,ds_email,ds_telefone);
+                    
+                    SET ID_PRODUTOR = LAST_INSERT_ID();
+                    
+                    INSERT INTO `cad_detalhe_pessoa_juridica` (`id_cad_produtor`,`nn_cnpj`,`nm_razao_social`)
+                    VALUES (ID_PRODUTOR,cpf_cnpj,pj_nm_razao_social);
+					
+                    IF ERRO_BD = 1 THEN
+						ROLLBACK;
+                        SET ERRO = TRUE;
+						SET MSG = MSG_ERRO_BD;
+					ELSE
+						COMMIT;
+						SET ERRO = FALSE;
+						SET MSG = MSG_SUCESSO;
+                    END IF;
+                END IF;
+            ELSE
+				SET ERRO = TRUE;
+				SET MSG = 'CNPJ INVÁLIDO!';
+            END IF;
+		ELSE
+			SET ERRO = TRUE;
+			SET MSG = CPF_CNPJ_INVALIDO;
+		END IF;
+	ELSE 
+		SET ERRO = TRUE;
+        SET MSG = CPF_CNPJ_INVALIDO;
+	END IF;
+    
+    IF ERRO THEN
+		SELECT FALSE AS RETORNO, MSG AS MENSAGEM;
+    ELSE
+		SELECT TRUE AS RETORNO, MSG AS MENSAGEM;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `exibir_unidade_geracao_distribuida` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -379,14 +768,12 @@ UNLOCK TABLES;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `exibir_unidade_geracao_distribuida`(IN numero int)
-begin 
-
-select * from cad_unid_geracao_distribuida as gd limit numero;
-
-end ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `exibir_unidade_geracao_distribuida`(IN numero INT)
+BEGIN 
+	SELECT * FROM `cad_unid_geracao_distribuida` AS gd LIMIT numero;
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -400,18 +787,16 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `exibir_unidade_geracao_distribuida_por_concessionaria`(IN concessionaria varchar(255))
-begin 
-
-declare id_concessionaria int;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `exibir_unidade_geracao_distribuida_por_concessionaria`(IN concessionaria VARCHAR(255))
+BEGIN
+	DECLARE id_concessionaria INT;
 	
-set id_concessionaria= (select id from cad_distribuidora WHERE nm_distribuidora=concessionaria);
+	SET id_concessionaria = (SELECT `id` FROM `cad_distribuidora` WHERE `nm_distribuidora` = concessionaria);
 
-select * from cad_unid_geracao_distribuida where id_cad_distribuidora=id_concessionaria;
-
-end ;;
+	SELECT * FROM `cad_unid_geracao_distribuida` WHERE `id_cad_distribuidora` = id_concessionaria;
+END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -427,4 +812,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-04  7:40:11
+-- Dump completed on 2021-12-05 18:47:27
